@@ -2,8 +2,8 @@ import {NextRequest,NextResponse} from "next/server";import {isAdmin} from "@/li
 const ok=(u:string)=>/^https:\/\/(github\.com\/[\w.-]+\/[\w.-]+\/releases\/download\/|[\w.-]+\.githubusercontent\.com\/)/.test(u);
 const okImg=(u:string)=>!u||/^https:\/\//.test(u);
 const no=()=>NextResponse.json({error:"Unauthorized"},{status:401});
-export async function GET(){if(!isAdmin())return no();return NextResponse.json(await listApps(true))}
-export async function POST(q:NextRequest){if(!isAdmin())return no();
+export async function GET(){if(!(await isAdmin()))return no();return NextResponse.json(await listApps(true))}
+export async function POST(q:NextRequest){if(!(await isAdmin()))return no();
  if(q.headers.get("origin")&&new URL(q.headers.get("origin")!).host!==q.headers.get("host"))return NextResponse.json({error:"Bad origin"},{status:403});
  const b=await q.json().catch(()=>null);if(!b)return NextResponse.json({error:"Invalid body"},{status:400});
  const slug=String(b.slug||"").toLowerCase();
@@ -15,5 +15,5 @@ export async function POST(q:NextRequest){if(!isAdmin())return no();
  const a:App={slug,name:t("name",80),publisher:t("publisher",80),category:t("category",40)||"Other",version:t("version",30),short:t("short",140),description:t("description"),changelog:t("changelog"),minAndroid:t("minAndroid",10),sizeMB:t("sizeMB",10),iconUrl:t("iconUrl",500),screenshots:shots,apkUrl:t("apkUrl",500),featured:!!b.featured,published:!!b.published,createdAt:old?.createdAt||Date.now()};
  await r("HSET","apps",slug,JSON.stringify(a));
  await r("LPUSH","audit",JSON.stringify({t:Date.now(),a:old?"update":"create",slug,v:a.version}));return NextResponse.json({ok:true})}
-export async function DELETE(q:NextRequest){if(!isAdmin())return no();const s=q.nextUrl.searchParams.get("slug")||"";
+export async function DELETE(q:NextRequest){if(!(await isAdmin()))return no();const s=q.nextUrl.searchParams.get("slug")||"";
  await r("HDEL","apps",s);await r("LPUSH","audit",JSON.stringify({t:Date.now(),a:"delete",slug:s}));return NextResponse.json({ok:true})}

@@ -5,11 +5,12 @@ import ScreenshotCarousel from "@/components/ScreenshotCarousel";
 
 export const dynamic = "force-dynamic";
 
-export default async function D({
-  params,
-}: {
-  params: { slug: string };
-}) {
+export default async function D(
+  props: {
+    params: Promise<{ slug: string }>;
+  }
+) {
+  const params = await props.params;
   const a = await getApp(params.slug).catch(() => null);
 
   if (!a || !a.published) {
