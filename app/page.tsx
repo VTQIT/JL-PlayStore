@@ -212,7 +212,7 @@ export default function HomePage() {
       </header>
 
       {/* Hero */}
-      <section className="glass mt-6 overflow-hidden bg-gradient-to-br from-blue-500/30 to-violet-500/30 p-6 md:p-8">
+      <section className="glass mt-6 overflow-hidden bg-linear-to-br from-blue-500/30 to-violet-500/30 p-6 md:p-8">
         <p className="text-xs font-semibold tracking-widest text-cyan-200">
           YOUR APP DISCOVERY STORE
         </p>
