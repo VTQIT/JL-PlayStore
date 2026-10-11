@@ -9,7 +9,7 @@ export async function POST(q:NextRequest){if(!isAdmin())return no();
  const slug=String(b.slug||"").toLowerCase();
  if(!/^[a-z0-9-]{2,60}$/.test(slug)||!b.name||!b.version)return NextResponse.json({error:"Name, version and a slug (a-z, 0-9, -) are required."},{status:400});
  if(!ok(String(b.apkUrl||"")))return NextResponse.json({error:"APK link must be a GitHub Releases download URL."},{status:400});
- const shots=(Array.isArray(b.screenshots)?b.screenshots:[]).map(String).filter(okImg).slice(0,8);
+ const shots=(Array.isArray(b.screenshots)?b.screenshots:[]).map(String).filter(okImg).filter(okImg).slice(0,5);
  if(!okImg(String(b.iconUrl||"")))return NextResponse.json({error:"Icon must be an https URL."},{status:400});
  const old=await getApp(slug);const t=(k:string,n=2000)=>String(b[k]||"").slice(0,n);
  const a:App={slug,name:t("name",80),publisher:t("publisher",80),category:t("category",40)||"Other",version:t("version",30),short:t("short",140),description:t("description"),changelog:t("changelog"),minAndroid:t("minAndroid",10),sizeMB:t("sizeMB",10),iconUrl:t("iconUrl",500),screenshots:shots,apkUrl:t("apkUrl",500),featured:!!b.featured,published:!!b.published,createdAt:old?.createdAt||Date.now()};
