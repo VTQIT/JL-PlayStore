@@ -1,7 +1,173 @@
-@tailwind base;@tailwind components;@tailwind utilities;
+@import 'tailwindcss';
+
+/*
+  The default border color has changed to `currentcolor` in Tailwind CSS v4,
+  so we've added these compatibility styles to make sure everything still
+  looks the same as it did with Tailwind CSS v3.
+
+  If we ever want to remove these styles, we need to add an explicit border
+  color utility to any element that depends on these defaults.
+*/
+@layer base {
+  *,
+  ::after,
+  ::before,
+  ::backdrop,
+  ::file-selector-button {
+    border-color: var(--color-gray-200, currentcolor);
+  }
+}
+
 body{background:radial-gradient(900px 500px at 10% -10%,#2a3fb8aa,transparent),radial-gradient(700px 500px at 100% 10%,#6d2fc488,transparent),#070d24;color:#e8ecff;min-height:100vh;font-family:system-ui,sans-serif}
 .glass{background:rgba(255,255,255,.06);backdrop-filter:blur(16px);border:1px solid rgba(255,255,255,.12);border-radius:20px;box-shadow:0 8px 32px rgba(0,0,0,.3)}
 .btn{background:linear-gradient(90deg,#7c8cff,#a98bff);color:#0b1030;font-weight:600;border-radius:999px;padding:.6rem 1.2rem}
 .inp{width:100%;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.14);border-radius:12px;padding:.6rem .8rem}
 :focus-visible{outline:2px solid #67e8f9;outline-offset:2px}
 @media(prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+
+/* JL PlayStore — mobile-first glass theme */
+:root {
+  color-scheme: dark;
+  --store-bg: #050b1d;
+  --store-panel: rgba(15, 28, 61, 0.72);
+  --store-border: rgba(125, 190, 255, 0.16);
+  --store-cyan: #67e8f9;
+}
+
+html {
+  min-height: 100%;
+  background: var(--store-bg);
+  scroll-padding-top: 84px;
+}
+
+body {
+  min-height: 100vh;
+  margin: 0;
+  color: #f8fafc;
+  background:
+    radial-gradient(ellipse at 10% 0%, rgba(37, 99, 235, 0.19), transparent 38rem),
+    radial-gradient(ellipse at 100% 35%, rgba(124, 58, 237, 0.12), transparent 34rem),
+    var(--store-bg);
+  -webkit-font-smoothing: antialiased;
+}
+
+button,
+input,
+textarea,
+select {
+  font: inherit;
+}
+
+button,
+a {
+  -webkit-tap-highlight-color: transparent;
+}
+
+.glass {
+  min-width: 0;
+  background: var(--store-panel);
+  border: 1px solid var(--store-border);
+  border-radius: 18px;
+  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.2);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  overflow-wrap: anywhere;
+}
+
+.inp {
+  width: 100%;
+  min-width: 0;
+  min-height: 46px;
+  padding: 12px 14px;
+  color: #f8fafc;
+  background: rgba(15, 23, 42, 0.78);
+  border: 1px solid var(--store-border);
+  border-radius: 14px;
+  outline: none;
+}
+
+.inp::placeholder {
+  color: #94a3b8;
+}
+
+.inp:focus {
+  border-color: rgba(103, 232, 249, 0.7);
+  box-shadow: 0 0 0 3px rgba(34, 211, 238, 0.1);
+}
+
+main {
+  overflow-wrap: anywhere;
+}
+
+main img {
+  max-width: 100%;
+}
+
+main a,
+main button {
+  touch-action: manipulation;
+}
+
+[aria-label="Main navigation"] {
+  padding-bottom: env(safe-area-inset-bottom);
+  border-color: var(--store-border);
+  box-shadow: 0 -8px 30px rgba(0, 0, 0, 0.18);
+}
+
+[aria-label="Main navigation"] a {
+  min-height: 44px;
+}
+
+@media (max-width: 639px) {
+  main.min-h-screen {
+    padding-left: 14px;
+    padding-right: 14px;
+    padding-bottom: calc(100px + env(safe-area-inset-bottom));
+  }
+
+  main h1 {
+    overflow-wrap: anywhere;
+  }
+
+  main input[type="search"] {
+    font-size: 16px;
+  }
+
+  main .glass {
+    border-radius: 16px;
+  }
+
+  main .grid {
+    min-width: 0;
+  }
+
+  main button {
+    min-height: 40px;
+  }
+
+  [aria-label="Main navigation"] > div {
+    height: 64px;
+  }
+}
+
+@media (max-width: 360px) {
+  main.min-h-screen {
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+
+  [aria-label="Main navigation"] a {
+    padding-left: 2px;
+    padding-right: 2px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}

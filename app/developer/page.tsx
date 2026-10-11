@@ -223,7 +223,7 @@ export default function DeveloperPage() {
           {/* Honeypot field for basic bot filtering */}
           <div
             aria-hidden="true"
-            className="absolute -left-[10000px] h-px w-px overflow-hidden"
+            className="absolute left-[-10000px] h-px w-px overflow-hidden"
           >
             <label>
               Leave this field empty

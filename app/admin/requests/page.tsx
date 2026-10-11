@@ -194,7 +194,7 @@ export default function AdminRequestsPage() {
                     {item.requestType}
                   </p>
 
-                  <h2 className="mt-1 break-words text-xl font-semibold">
+                  <h2 className="mt-1 wrap-break-word text-xl font-semibold">
                     {item.itemName}
                   </h2>
 
@@ -202,7 +202,7 @@ export default function AdminRequestsPage() {
                     From: {item.requesterName}
                   </p>
 
-                  <p className="break-words text-sm text-slate-400">
+                  <p className="wrap-break-word text-sm text-slate-400">
                     Contact: {item.contact}
                   </p>
 
@@ -234,7 +234,7 @@ export default function AdminRequestsPage() {
               )}
 
               {item.message && (
-                <div className="mt-4 whitespace-pre-wrap break-words rounded-xl bg-black/20 p-3 text-sm text-slate-200">
+                <div className="mt-4 whitespace-pre-wrap wrap-break-word rounded-xl bg-black/20 p-3 text-sm text-slate-200">
                   {item.message}
                 </div>
               )}

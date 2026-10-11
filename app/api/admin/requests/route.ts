@@ -1,4 +1,4 @@
-import { NextRequest, NextResponse } from "next/server";
+﻿import { NextRequest, NextResponse } from "next/server";
 import { isAdmin } from "@/lib/auth";
 import { r } from "@/lib/db";
 
@@ -30,7 +30,7 @@ async function getRecord(id: string) {
 }
 
 export async function GET() {
-  if (!isAdmin()) return no();
+  if (!(await isAdmin())) return no();
 
   try {
     const ids = (await r(
@@ -57,7 +57,7 @@ export async function GET() {
 }
 
 export async function PATCH(request: NextRequest) {
-  if (!isAdmin()) return no();
+  if (!(await isAdmin())) return no();
 
   const body = await request.json().catch(() => null);
   const id = String(body?.id || "");
@@ -99,7 +99,7 @@ export async function PATCH(request: NextRequest) {
 }
 
 export async function DELETE(request: NextRequest) {
-  if (!isAdmin()) return no();
+  if (!(await isAdmin())) return no();
 
   const id = request.nextUrl.searchParams.get("id") || "";
 
